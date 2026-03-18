@@ -166,6 +166,15 @@ model Address {
   @@index([userId, deletedAt])
 }
 
+model UserSession {
+  sid    String   @id @db.VarChar(255)
+  sess   Json
+  expire DateTime
+
+  @@index([expire])
+  @@map("user_sessions")
+}
+
 model Category {
   id                  String              @id @default(cuid())
   name                String
