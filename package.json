@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "jhoana-rosales-boutique",
   "version": "0.1.0",
   "private": true,
@@ -40,6 +40,6 @@
     "tailwindcss": "^3.4.13"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "20.x"
   }
 }
