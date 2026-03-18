@@ -1,8 +1,8 @@
-﻿const adminService = require('./admin.service');
+const adminService = require('./admin.service');
 
 async function list(_req, res) {
   const data = await adminService.getPromotionsPageData();
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Promociones',
     section: 'promotions',
     contentView: 'admin/promotions/index',
@@ -12,7 +12,7 @@ async function list(_req, res) {
 
 async function createForm(_req, res) {
   const data = await adminService.getPromotionFormData();
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Nueva promocion',
     section: 'promotions',
     contentView: 'admin/promotions/form',
@@ -23,7 +23,7 @@ async function createForm(_req, res) {
 
 async function editForm(req, res) {
   const data = await adminService.getPromotionFormData(req.params.id);
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Editar promocion',
     section: 'promotions',
     contentView: 'admin/promotions/form',
@@ -48,3 +48,4 @@ async function updateState(req, res) {
 }
 
 module.exports = { list, createForm, editForm, create, update, updateState };
+

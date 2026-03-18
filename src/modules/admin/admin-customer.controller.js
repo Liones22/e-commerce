@@ -1,8 +1,8 @@
-﻿const adminService = require('./admin.service');
+const adminService = require('./admin.service');
 
 async function list(_req, res) {
   const data = await adminService.getCustomersPageData();
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Clientes',
     section: 'customers',
     contentView: 'admin/customers/index',
@@ -12,7 +12,7 @@ async function list(_req, res) {
 
 async function detail(req, res) {
   const customer = await adminService.getCustomerDetail(req.params.id);
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: `${customer.firstName} ${customer.lastName}`,
     section: 'customers',
     contentView: 'admin/customers/detail',
@@ -21,3 +21,4 @@ async function detail(req, res) {
 }
 
 module.exports = { list, detail };
+

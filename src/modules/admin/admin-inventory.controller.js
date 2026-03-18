@@ -1,8 +1,8 @@
-﻿const adminService = require('./admin.service');
+const adminService = require('./admin.service');
 
 async function list(_req, res) {
   const data = await adminService.getInventoryPageData();
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Inventario',
     section: 'inventory',
     contentView: 'admin/inventory/index',
@@ -12,7 +12,7 @@ async function list(_req, res) {
 
 async function detail(req, res) {
   const variant = await adminService.getInventoryDetail(req.params.variantId);
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: `Inventario ${variant.product.name}`,
     section: 'inventory',
     contentView: 'admin/inventory/detail',
@@ -32,3 +32,4 @@ async function adjust(req, res) {
 }
 
 module.exports = { list, detail, adjust };
+

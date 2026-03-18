@@ -4,7 +4,7 @@ services:
     name: jrb-ecommerce-web
     plan: free
     buildCommand: npm install --production=false && npm run prisma:generate
-    startCommand: npm run prisma:deploy || npx prisma db push && npm start
+    startCommand: npm run prisma:deploy && npx prisma db push && npm start
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV

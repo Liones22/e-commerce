@@ -11,7 +11,7 @@ function buildSessionUser(user) {
 }
 
 async function showLogin(_req, res) {
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Admin Login',
     section: 'login',
     contentView: 'admin/login'
@@ -32,3 +32,4 @@ async function logout(req, res) {
 }
 
 module.exports = { showLogin, login, logout };
+

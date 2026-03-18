@@ -2,7 +2,7 @@ const adminService = require('./admin.service');
 
 async function list(_req, res) {
   const data = await adminService.getProductsPageData();
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Productos',
     section: 'products',
     contentView: 'admin/products/index',
@@ -12,7 +12,7 @@ async function list(_req, res) {
 
 async function createForm(_req, res) {
   const data = await adminService.getProductFormData();
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Nuevo producto',
     section: 'products',
     contentView: 'admin/products/form',
@@ -23,7 +23,7 @@ async function createForm(_req, res) {
 
 async function editForm(req, res) {
   const data = await adminService.getProductFormData(req.params.id);
-  return res.render('layouts/admin.layout', {
+  return res.render('layouts/admin.layout.ejs', {
     title: 'Editar producto',
     section: 'products',
     contentView: 'admin/products/form',
@@ -49,4 +49,5 @@ async function toggleState(req, res) {
 }
 
 module.exports = { list, createForm, editForm, create, update, toggleState };
+
 
