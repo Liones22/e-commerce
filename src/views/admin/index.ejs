@@ -1,0 +1,60 @@
+﻿<section class="stack">
+  <div class="admin-grid kpi">
+    <article class="admin-card"><div class="muted">Productos activos</div><div class="metric-value"><%= data.kpis.totalProducts %></div></article>
+    <article class="admin-card"><div class="muted">Promociones activas</div><div class="metric-value"><%= data.kpis.activePromotions %></div></article>
+    <article class="admin-card"><div class="muted">Pedidos activos</div><div class="metric-value"><%= data.kpis.pendingOrders %></div></article>
+    <article class="admin-card"><div class="muted">Stock bajo</div><div class="metric-value"><%= data.kpis.lowStockCount %></div></article>
+  </div>
+
+  <div class="admin-grid kpi">
+    <article class="admin-card"><div class="muted">Ventas diarias</div><div class="metric-value">$ <%= data.sales.daily.toLocaleString('es-CO') %></div></article>
+    <article class="admin-card"><div class="muted">Ventas semanales</div><div class="metric-value">$ <%= data.sales.weekly.toLocaleString('es-CO') %></div></article>
+    <article class="admin-card"><div class="muted">Ventas mensuales</div><div class="metric-value">$ <%= data.sales.monthly.toLocaleString('es-CO') %></div></article>
+    <article class="admin-card"><div class="muted">Ventas anuales</div><div class="metric-value">$ <%= data.sales.yearly.toLocaleString('es-CO') %></div></article>
+  </div>
+
+  <div class="split">
+    <section class="admin-card">
+      <h2 class="section-title">Top productos</h2>
+      <table class="admin-table">
+        <thead><tr><th>Producto</th><th>Unidades</th><th>Ingreso</th></tr></thead>
+        <tbody>
+          <% data.topProducts.forEach((item) => { %>
+            <tr>
+              <td><%= item.productName %></td>
+              <td><%= item.quantitySold %></td>
+              <td>$ <%= item.revenue.toLocaleString('es-CO') %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="admin-card">
+      <h2 class="section-title">Stock bajo</h2>
+      <div class="stack">
+        <% data.lowStockItems.forEach((item) => { %>
+          <a class="button-link alt" href="/admin/inventario/<%= item.id %>"><%= item.product.name %> / <%= item.size.name %> / <%= item.stock %></a>
+        <% }) %>
+      </div>
+    </section>
+  </div>
+
+  <section class="admin-card">
+    <h2 class="section-title">Pedidos recientes</h2>
+    <table class="admin-table">
+      <thead><tr><th>Pedido</th><th>Cliente</th><th>Estado</th><th>Total</th><th></th></tr></thead>
+      <tbody>
+        <% data.recentOrders.forEach((order) => { %>
+          <tr>
+            <td><%= order.orderNumber %></td>
+            <td><%= order.user.firstName %> <%= order.user.lastName %></td>
+            <td><span class="badge"><%= order.status %></span></td>
+            <td>$ <%= Number(order.grandTotal).toLocaleString('es-CO') %></td>
+            <td><a class="button-link alt" href="/admin/pedidos/<%= order.id %>">Ver</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+</section>

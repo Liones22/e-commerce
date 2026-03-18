@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | Admin</title>
+    <link rel="stylesheet" href="/css/app.css" />
+    <style>
+      body { font-family: Georgia, serif; background: #f4efe7; color: #1d1b1a; margin: 0; }
+      .admin-shell { min-height: 100vh; display: grid; grid-template-columns: 260px 1fr; }
+      .admin-sidebar { background: linear-gradient(180deg, #161312 0%, #2b2321 100%); color: #f7f1eb; padding: 32px 24px; }
+      .admin-brand { font-size: 1.4rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; }
+      .admin-nav a { display: block; color: #f7f1eb; text-decoration: none; padding: 10px 12px; border-radius: 999px; margin-bottom: 8px; }
+      .admin-nav a.is-active, .admin-nav a:hover { background: rgba(255,255,255,0.12); }
+      .admin-main { padding: 32px; }
+      .admin-topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+      .admin-card { background: rgba(255,255,255,0.86); backdrop-filter: blur(12px); border: 1px solid rgba(0,0,0,0.08); border-radius: 24px; padding: 24px; box-shadow: 0 18px 40px rgba(33,24,19,0.08); }
+      .admin-grid { display: grid; gap: 20px; }
+      .admin-grid.kpi { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+      .admin-table { width: 100%; border-collapse: collapse; }
+      .admin-table th, .admin-table td { padding: 12px 10px; border-bottom: 1px solid rgba(0,0,0,0.08); text-align: left; vertical-align: top; }
+      .admin-form { display: grid; gap: 16px; }
+      .admin-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+      label { display: grid; gap: 6px; font-size: 0.95rem; }
+      input, select, textarea, button { font: inherit; }
+      input, select, textarea { padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(0,0,0,0.12); background: #fff; }
+      button, .button-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 18px; border-radius: 999px; border: 0; background: #1f1a19; color: #fff; text-decoration: none; cursor: pointer; }
+      .button-link.alt, button.alt { background: #ddc3be; color: #2b2321; }
+      .section-title { margin: 0 0 12px; font-size: 1.4rem; }
+      .metric-value { font-size: 2rem; font-weight: 700; }
+      .muted { color: #6e635f; }
+      .badge { display: inline-block; border-radius: 999px; padding: 6px 10px; background: #efe3df; color: #4d3a35; font-size: 0.82rem; }
+      .stack { display: grid; gap: 16px; }
+      .split { display: grid; gap: 20px; grid-template-columns: 2fr 1fr; }
+      @media (max-width: 960px) {
+        .admin-shell { grid-template-columns: 1fr; }
+        .admin-sidebar { padding: 20px; }
+        .split { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <% const isLogin = section === 'login'; %>
+    <% if (isLogin) { %>
+      <main class="admin-main"><%- include('../' + contentView) %></main>
+    <% } else { %>
+      <div class="admin-shell">
+        <aside class="admin-sidebar">
+          <div class="admin-brand">JRB Admin</div>
+          <nav class="admin-nav">
+            <a href="/admin" class="<%= section === 'dashboard' ? 'is-active' : '' %>">Dashboard</a>
+            <a href="/admin/productos" class="<%= section === 'products' ? 'is-active' : '' %>">Productos</a>
+            <a href="/admin/inventario" class="<%= section === 'inventory' ? 'is-active' : '' %>">Inventario</a>
+            <a href="/admin/pedidos" class="<%= section === 'orders' ? 'is-active' : '' %>">Pedidos</a>
+            <a href="/admin/clientes" class="<%= section === 'customers' ? 'is-active' : '' %>">Clientes</a>
+            <a href="/admin/promociones" class="<%= section === 'promotions' ? 'is-active' : '' %>">Promociones</a>
+          </nav>
+        </aside>
+        <main class="admin-main">
+          <div class="admin-topbar">
+            <div>
+              <h1 style="margin:0;"><%= title %></h1>
+              <p class="muted" style="margin:6px 0 0;">Backoffice operativo de Jhoana Rosales Boutique</p>
+            </div>
+            <form method="post" action="/admin/logout">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button type="submit" class="alt">Cerrar sesion</button>
+            </form>
+          </div>
+          <%- include('../' + contentView) %>
+        </main>
+      </div>
+    <% } %>
+  </body>
+</html>
+
+

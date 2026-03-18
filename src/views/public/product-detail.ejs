@@ -1,0 +1,107 @@
+﻿<section class="product-hero reveal">
+  <div class="product-hero__gallery">
+    <div class="product-gallery" data-product-gallery>
+      <div class="product-gallery__stage" style="<%= product.ui.galleryStyle %>" data-product-gallery-stage>
+        <div class="product-gallery__art" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="product-gallery__info">
+          <strong><%= product.name %></strong>
+          <span><%= product.ui.categoryLabel %></span>
+        </div>
+      </div>
+      <div class="product-gallery__thumbs">
+        <% product.gallery.forEach((item, index) => { %>
+          <button
+            type="button"
+            class="product-gallery__thumb <%= index === 0 ? 'is-active' : '' %>"
+            data-product-gallery-thumb
+            data-gallery-bg="<%= item.tone %>"
+            data-gallery-title="<%= item.title %>"
+            data-gallery-subtitle="<%= item.subtitle %>"
+            data-gallery-price="<%= item.priceLabel %>"
+            data-gallery-stock="<%= item.stockLabel %>"
+          >
+            <span><%= item.subtitle %></span>
+            <strong><%= item.priceLabel %></strong>
+          </button>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-hero__content">
+    <p class="hero__eyebrow"><%= product.ui.categoryLabel %></p>
+    <h1><%= product.name %></h1>
+    <p class="product-hero__subtitle"><%= product.shortDescription || product.descriptionBlocks[0] %></p>
+    <div class="product-pricebox">
+      <strong><%= product.ui.priceLabel %></strong>
+      <% if (product.ui.compareAtLabel) { %>
+        <span><%= product.ui.compareAtLabel %></span>
+      <% } %>
+    </div>
+
+    <div class="size-selector" data-size-selector>
+      <p>Tallas disponibles</p>
+      <div class="size-selector__chips">
+        <% product.ui.availableSizes.forEach((size) => { %>
+          <button type="button" class="size-chip <%= product.mainVariant && product.mainVariant.size?.code === size ? 'is-active' : '' %>"><%= size %></button>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="product-hero__actions">
+      <button
+        type="button"
+        class="primary-button"
+        data-cart-add
+        data-product="<%- encodeURIComponent(JSON.stringify({ id: product.id, slug: product.slug, name: product.name, priceLabel: product.ui.priceLabel, priceValue: product.ui.priceValue, categoryLabel: product.ui.categoryLabel, sizeLabel: product.ui.sizeLabel })) %>"
+      >
+        Añadir al carrito visual
+      </button>
+      <a class="secondary-button" href="/catalogo/categoria/<%= product.category.slug %>">Ver mas de esta categoria</a>
+    </div>
+
+    <div class="product-notes">
+      <% product.fitNotes.forEach((note) => { %>
+        <p><%= note %></p>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section-shell reveal">
+  <div class="section-heading section-heading--split">
+    <div>
+      <p>Detalles</p>
+      <h2>Descripcion y ajuste</h2>
+    </div>
+  </div>
+  <div class="detail-grid">
+    <% product.descriptionBlocks.forEach((block) => { %>
+      <article class="detail-card">
+        <p><%= block %></p>
+      </article>
+    <% }) %>
+    <article class="detail-card detail-card--accent">
+      <p><strong>Disponibilidad</strong></p>
+      <span><%= product.variants.length %> variantes cargadas</span>
+    </article>
+  </div>
+</section>
+
+<section class="section-shell reveal">
+  <div class="section-heading section-heading--split">
+    <div>
+      <p>Tambien te puede gustar</p>
+      <h2>Relacionados de la misma categoria</h2>
+    </div>
+  </div>
+  <div class="product-grid product-grid--compact">
+    <% relatedProducts.forEach((item) => { %>
+      <%- include('./partials/product-card', { product: item }) %>
+    <% }) %>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+<section class="stack">
+  <article class="admin-card">
+    <h2 class="section-title">Pedido <%= order.orderNumber %></h2>
+    <p class="muted">Cliente: <%= order.user.firstName %> <%= order.user.lastName %> / <%= order.user.email %></p>
+    <div class="admin-grid kpi">
+      <div><div class="muted">Estado</div><div class="metric-value"><%= order.status %></div></div>
+      <div><div class="muted">Total</div><div class="metric-value">$ <%= Number(order.grandTotal).toLocaleString('es-CO') %></div></div>
+      <div><div class="muted">Pago</div><div class="metric-value"><%= order.payments[0]?.status || 'SIN_PAGO' %></div></div>
+    </div>
+  </article>
+
+  <article class="admin-card">
+    <h2 class="section-title">Actualizar estado</h2>
+    <form class="admin-form" method="post" action="/admin/pedidos/<%= order.id %>/estado?_method=PATCH">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <label>
+        Estado
+        <select name="status">
+          <% ['PENDING_PAYMENT','CONFIRMED','PROCESSING','SHIPPED','DELIVERED','CANCELLED','REFUNDED'].forEach((status) => { %>
+            <option value="<%= status %>" <%= order.status === status ? 'selected' : '' %>><%= status %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Nota<textarea name="note"></textarea></label>
+      <button type="submit">Actualizar pedido</button>
+    </form>
+  </article>
+
+  <article class="admin-card">
+    <h2 class="section-title">Items</h2>
+    <table class="admin-table">
+      <thead><tr><th>Producto</th><th>Talla</th><th>Cant.</th><th>Total</th></tr></thead>
+      <tbody>
+        <% order.items.forEach((item) => { %>
+          <tr><td><%= item.productName %></td><td><%= item.variantSizeName %></td><td><%= item.quantity %></td><td>$ <%= Number(item.lineTotal).toLocaleString('es-CO') %></td></tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </article>
+</section>
+
+

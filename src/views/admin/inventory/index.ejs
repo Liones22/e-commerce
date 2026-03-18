@@ -1,0 +1,18 @@
+﻿<section class="admin-card">
+  <h2 class="section-title">Inventario por talla</h2>
+  <table class="admin-table">
+    <thead><tr><th>Producto</th><th>Talla</th><th>SKU</th><th>Stock</th><th>Reservado</th><th></th></tr></thead>
+    <tbody>
+      <% items.forEach((item) => { %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.size.name %></td>
+          <td><%= item.sku %></td>
+          <td><%= item.stock %></td>
+          <td><%= item.reservedStock %></td>
+          <td><a class="button-link alt" href="/admin/inventario/<%= item.id %>">Gestionar</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>

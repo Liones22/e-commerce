@@ -1,0 +1,91 @@
+﻿<section class="catalog-hero reveal">
+  <div>
+    <p class="hero__eyebrow">Catalogo</p>
+    <h1><%= catalogSummary.title %></h1>
+    <p><%= catalogSummary.subtitle %></p>
+  </div>
+  <div class="catalog-hero__summary">
+    <strong><%= total %></strong>
+    <span>piezas disponibles</span>
+  </div>
+</section>
+
+<section class="catalog-controls reveal" data-filter-shell>
+  <form class="catalog-form" action="<%= activeCategory ? `/catalogo/categoria/${activeCategory}` : '/catalogo' %>" method="get">
+    <div class="catalog-form__row">
+      <label>
+        <span>Buscar</span>
+        <input type="search" name="q" value="<%= filters.search || '' %>" placeholder="Vestido, blusa, conjunto..." />
+      </label>
+      <label>
+        <span>Talla</span>
+        <select name="size">
+          <option value="">Todas</option>
+          <option value="XS" <%= filters.size === 'XS' ? 'selected' : '' %>>XS</option>
+          <option value="S" <%= filters.size === 'S' ? 'selected' : '' %>>S</option>
+          <option value="M" <%= filters.size === 'M' ? 'selected' : '' %>>M</option>
+          <option value="L" <%= filters.size === 'L' ? 'selected' : '' %>>L</option>
+          <option value="XL" <%= filters.size === 'XL' ? 'selected' : '' %>>XL</option>
+          <option value="ONE_SIZE" <%= filters.size === 'ONE_SIZE' ? 'selected' : '' %>>One size</option>
+        </select>
+      </label>
+      <label>
+        <span>Precio minimo</span>
+        <input type="number" name="minPrice" min="0" value="<%= filters.minPrice || '' %>" placeholder="0" />
+      </label>
+      <label>
+        <span>Precio maximo</span>
+        <input type="number" name="maxPrice" min="0" value="<%= filters.maxPrice || '' %>" placeholder="0" />
+      </label>
+      <label>
+        <span>Orden</span>
+        <select name="sort">
+          <option value="">Destacados</option>
+          <option value="newest" <%= filters.sort === 'newest' ? 'selected' : '' %>>Nuevos</option>
+          <option value="name" <%= filters.sort === 'name' ? 'selected' : '' %>>Nombre</option>
+          <option value="price-asc" <%= filters.sort === 'price-asc' ? 'selected' : '' %>>Precio menor</option>
+          <option value="price-desc" <%= filters.sort === 'price-desc' ? 'selected' : '' %>>Precio mayor</option>
+        </select>
+      </label>
+    </div>
+    <div class="catalog-form__actions">
+      <button type="submit" class="primary-button">Aplicar filtros</button>
+      <a class="secondary-button" href="<%= activeCategory ? `/catalogo/categoria/${activeCategory}` : '/catalogo' %>">Limpiar</a>
+      <button type="button" class="ghost-link catalog-filter-toggle" data-filter-toggle>Filtros</button>
+    </div>
+  </form>
+
+  <aside class="catalog-sidepanel" data-filter-panel>
+    <div class="catalog-sidepanel__head">
+      <strong>Categorias</strong>
+      <span><%= categories.length %> disponibles</span>
+    </div>
+    <div class="catalog-category-list">
+      <a class="catalog-category-list__item <%= !activeCategory ? 'is-active' : '' %>" href="/catalogo">
+        <span>Todas</span>
+        <small><%= total %></small>
+      </a>
+      <% categories.forEach((category) => { %>
+        <a class="catalog-category-list__item <%= activeCategory === category.slug ? 'is-active' : '' %>" href="/catalogo/categoria/<%= category.slug %>">
+          <span><%= category.name %></span>
+          <small><%= category._count.products %></small>
+        </a>
+      <% }) %>
+    </div>
+  </aside>
+</section>
+
+<section class="section-shell reveal">
+  <% if (hasResults) { %>
+    <div class="product-grid product-grid--catalog">
+      <% products.forEach((product) => { %>
+        <%- include('./partials/product-card', { product }) %>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <%- include('./partials/empty-state', {
+      title: 'No encontramos piezas con estos filtros.',
+      message: 'Prueba una talla diferente, reduce el rango de precio o cambia el termino de busqueda.'
+    }) %>
+  <% } %>
+</section>

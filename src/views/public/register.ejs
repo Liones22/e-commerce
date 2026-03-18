@@ -1,0 +1,27 @@
+<section class="stack" style="max-width:460px;margin:0 auto;">
+  <article class="admin-card">
+    <h1 class="section-title">Crear cuenta</h1>
+    <p class="muted">Registrate para comprar y acumular puntos en Jhoana Rosales Boutique.</p>
+    <form class="admin-form" method="post" action="/registro">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <label>
+        Nombres
+        <input type="text" name="firstName" minlength="2" required autocomplete="given-name" />
+      </label>
+      <label>
+        Apellidos
+        <input type="text" name="lastName" minlength="2" required autocomplete="family-name" />
+      </label>
+      <label>
+        Correo
+        <input type="email" name="email" required autocomplete="email" />
+      </label>
+      <label>
+        Contrasena
+        <input type="password" name="password" minlength="8" required autocomplete="new-password" />
+      </label>
+      <button type="submit">Crear cuenta</button>
+    </form>
+    <p class="muted">Ya tienes cuenta? <a href="/login">Inicia sesion</a></p>
+  </article>
+</section>

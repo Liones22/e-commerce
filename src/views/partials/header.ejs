@@ -1,0 +1,31 @@
+﻿<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="Jhoana Rosales Boutique">
+      <span class="brand__mark">JR</span>
+      <span class="brand__text">
+        <strong>Jhoana Rosales</strong>
+        <small>Boutique</small>
+      </span>
+    </a>
+
+    <form class="header-search" action="/catalogo" method="get" role="search">
+      <label class="sr-only" for="site-search">Buscar productos</label>
+      <input id="site-search" name="q" type="search" placeholder="Buscar vestidos, blusas, tallas..." value="<%= (locals.filters && locals.filters.search) || '' %>" />
+      <button type="submit">Buscar</button>
+    </form>
+
+    <nav class="site-nav" aria-label="Principal">
+      <a href="/catalogo">Catalogo</a>
+      <a href="/promociones">Promociones</a>
+      <a href="/catalogo?sort=newest">Novedades</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost-link" href="/login">Mi cuenta</a>
+      <button class="cart-toggle" type="button" data-cart-toggle aria-controls="visual-cart" aria-expanded="false">
+        <span>Carrito</span>
+        <strong data-cart-count>0</strong>
+      </button>
+    </div>
+  </div>
+</header>

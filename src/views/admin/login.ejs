@@ -1,0 +1,19 @@
+<div style="min-height:85vh;display:grid;place-items:center;">
+  <section class="admin-card" style="width:min(100%,460px);">
+    <p class="badge">Backoffice</p>
+    <h1 class="section-title">Admin Login</h1>
+    <p class="muted">Acceso exclusivo para administracion y operaciones.</p>
+    <form class="admin-form" method="post" action="/admin/login">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <label>
+        Correo
+        <input type="email" name="email" required />
+      </label>
+      <label>
+        Contrasena
+        <input type="password" name="password" required minlength="8" />
+      </label>
+      <button type="submit">Ingresar</button>
+    </form>
+  </section>
+</div>

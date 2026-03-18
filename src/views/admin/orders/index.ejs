@@ -1,0 +1,18 @@
+﻿<section class="admin-card">
+  <h2 class="section-title">Pedidos</h2>
+  <table class="admin-table">
+    <thead><tr><th>Pedido</th><th>Cliente</th><th>Estado</th><th>Pago</th><th>Total</th><th></th></tr></thead>
+    <tbody>
+      <% orders.forEach((order) => { %>
+        <tr>
+          <td><%= order.orderNumber %></td>
+          <td><%= order.user.firstName %> <%= order.user.lastName %></td>
+          <td><span class="badge"><%= order.status %></span></td>
+          <td><%= order.payments[0]?.status || 'SIN_PAGO' %></td>
+          <td>$ <%= Number(order.grandTotal).toLocaleString('es-CO') %></td>
+          <td><a class="button-link alt" href="/admin/pedidos/<%= order.id %>">Abrir</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>

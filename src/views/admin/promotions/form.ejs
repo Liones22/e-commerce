@@ -1,0 +1,45 @@
+<% const action = mode === 'edit' ? `/admin/promociones/${promotion.id}?_method=PUT` : '/admin/promociones'; %>
+<section class="admin-card">
+  <form class="admin-form" method="post" action="<%= action %>">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <div class="admin-form-grid">
+      <label>Nombre<input type="text" name="name" value="<%= promotion?.name || '' %>" required /></label>
+      <label>Estado
+        <select name="status">
+          <% ['DRAFT','ACTIVE','PAUSED','EXPIRED','ARCHIVED'].forEach((status) => { %>
+            <option value="<%= status %>" <%= promotion?.status === status ? 'selected' : '' %>><%= status %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Trigger
+        <select name="triggerType">
+          <% ['AUTOMATIC','COUPON'].forEach((trigger) => { %>
+            <option value="<%= trigger %>" <%= promotion?.triggerType === trigger ? 'selected' : '' %>><%= trigger %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Descuento
+        <select name="discountType">
+          <% ['PERCENTAGE','FIXED_AMOUNT'].forEach((type) => { %>
+            <option value="<%= type %>" <%= promotion?.discountType === type ? 'selected' : '' %>><%= type %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Valor<input type="number" step="0.01" name="value" value="<%= promotion?.value || '' %>" required /></label>
+      <label>Subtotal minimo<input type="number" step="0.01" name="minSubtotal" value="<%= promotion?.minSubtotal || '' %>" /></label>
+      <label>Inicio<input type="datetime-local" name="startsAt" value="<%= promotion?.startsAt ? new Date(promotion.startsAt).toISOString().slice(0,16) : '' %>" /></label>
+      <label>Fin<input type="datetime-local" name="endsAt" value="<%= promotion?.endsAt ? new Date(promotion.endsAt).toISOString().slice(0,16) : '' %>" /></label>
+    </div>
+    <label>Descripcion<textarea name="description"><%= promotion?.description || '' %></textarea></label>
+    <div class="admin-form-grid">
+      <label>Codigo cupon<input type="text" name="couponCode" value="<%= promotion?.coupons?.[0]?.code || '' %>" /></label>
+      <label>Estado cupon<input type="text" name="couponStatus" value="<%= promotion?.coupons?.[0]?.status || 'ACTIVE' %>" /></label>
+    </div>
+    <div style="display:flex;gap:12px;">
+      <button type="submit"><%= mode === 'edit' ? 'Guardar promocion' : 'Crear promocion' %></button>
+      <a class="button-link alt" href="/admin/promociones">Cancelar</a>
+    </div>
+  </form>
+</section>
+
+

@@ -1,0 +1,31 @@
+<section class="stack">
+  <div class="admin-topbar" style="margin-bottom:0;">
+    <div><h2 class="section-title">Promociones</h2></div>
+    <a class="button-link" href="/admin/promociones/nueva">Nueva promocion</a>
+  </div>
+  <article class="admin-card">
+    <table class="admin-table">
+      <thead><tr><th>Promocion</th><th>Tipo</th><th>Estado</th><th>Cupon</th><th></th></tr></thead>
+      <tbody>
+        <% promotions.forEach((promotion) => { %>
+          <tr>
+            <td><strong><%= promotion.name %></strong><div class="muted"><%= promotion.description || '' %></div></td>
+            <td><%= promotion.discountType %> / <%= Number(promotion.value).toLocaleString('es-CO') %></td>
+            <td><span class="badge"><%= promotion.status %></span></td>
+            <td><%= promotion.coupons[0]?.code || '-' %></td>
+            <td>
+              <a class="button-link alt" href="/admin/promociones/<%= promotion.id %>/editar">Editar</a>
+              <form method="post" action="/admin/promociones/<%= promotion.id %>/estado?_method=PATCH" style="display:inline-flex;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <input type="hidden" name="status" value="<%= promotion.status === 'ACTIVE' ? 'PAUSED' : 'ACTIVE' %>" />
+                <button type="submit"><%= promotion.status === 'ACTIVE' ? 'Pausar' : 'Activar' %></button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </article>
+</section>
+
+

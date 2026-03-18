@@ -1,0 +1,31 @@
+<section class="stack">
+  <div class="admin-topbar" style="margin-bottom:0;">
+    <div><h2 class="section-title">Catalogo administrable</h2></div>
+    <a class="button-link" href="/admin/productos/nuevo">Nuevo producto</a>
+  </div>
+  <section class="admin-card">
+    <table class="admin-table">
+      <thead><tr><th>Producto</th><th>Categoria</th><th>Variantes</th><th>Activo</th><th></th></tr></thead>
+      <tbody>
+        <% products.forEach((product) => { %>
+          <tr>
+            <td><strong><%= product.name %></strong><div class="muted"><%= product.slug %></div></td>
+            <td><%= product.category.name %></td>
+            <td><%= product.variants.length %></td>
+            <td><span class="badge"><%= product.isActive ? 'Activo' : 'Inactivo' %></span></td>
+            <td>
+              <a class="button-link alt" href="/admin/productos/<%= product.id %>/editar">Editar</a>
+              <form method="post" action="/admin/productos/<%= product.id %>/estado?_method=PATCH" style="display:inline-flex;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <input type="hidden" name="isActive" value="<%= product.isActive ? 'false' : 'true' %>" />
+                <button type="submit"><%= product.isActive ? 'Desactivar' : 'Activar' %></button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+</section>
+
+

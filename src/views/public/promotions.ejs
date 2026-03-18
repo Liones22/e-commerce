@@ -1,0 +1,23 @@
+﻿<section class="catalog-hero reveal">
+  <div>
+    <p class="hero__eyebrow">Promociones</p>
+    <h1>Ofertas activas y beneficios visibles</h1>
+    <p>Las promociones se muestran como referencia visual. La logica real vive en el backend de dominio.</p>
+  </div>
+</section>
+
+<section class="section-shell reveal">
+  <div class="promotion-grid">
+    <% (promotions || []).forEach((promotion) => { %>
+      <article class="promotion-card">
+        <p class="promotion-card__eyebrow"><%= promotion.triggerType %></p>
+        <h2><%= promotion.name %></h2>
+        <p><%= promotion.description || 'Promocion activa de la boutique.' %></p>
+        <div class="promotion-card__meta">
+          <span><%= promotion.discountType %></span>
+          <span><%= promotion.status %></span>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>

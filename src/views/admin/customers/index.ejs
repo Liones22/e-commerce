@@ -1,0 +1,17 @@
+﻿<section class="admin-card">
+  <h2 class="section-title">Clientes</h2>
+  <table class="admin-table">
+    <thead><tr><th>Cliente</th><th>Correo</th><th>Pedidos</th><th>Puntos</th><th></th></tr></thead>
+    <tbody>
+      <% customers.forEach((customer) => { %>
+        <tr>
+          <td><%= customer.firstName %> <%= customer.lastName %></td>
+          <td><%= customer.email %></td>
+          <td><%= customer.orders.length %></td>
+          <td><%= customer.loyaltyAccount?.currentBalance || 0 %></td>
+          <td><a class="button-link alt" href="/admin/clientes/<%= customer.id %>">Ver</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>

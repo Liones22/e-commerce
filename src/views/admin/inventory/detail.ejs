@@ -1,0 +1,42 @@
+<section class="stack">
+  <article class="admin-card">
+    <h2 class="section-title"><%= variant.product.name %> / <%= variant.size.name %></h2>
+    <p class="muted">SKU: <%= variant.sku %></p>
+    <div class="admin-grid kpi">
+      <div><div class="muted">Stock</div><div class="metric-value"><%= variant.stock %></div></div>
+      <div><div class="muted">Reservado</div><div class="metric-value"><%= variant.reservedStock %></div></div>
+      <div><div class="muted">Precio</div><div class="metric-value">$ <%= Number(variant.price).toLocaleString('es-CO') %></div></div>
+    </div>
+  </article>
+
+  <article class="admin-card">
+    <h2 class="section-title">Ajustar stock</h2>
+    <form class="admin-form" method="post" action="/admin/inventario/ajustes">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <input type="hidden" name="variantId" value="<%= variant.id %>" />
+      <label>Cantidad (+/-)<input type="number" name="quantity" required /></label>
+      <label>Nota<textarea name="note"></textarea></label>
+      <button type="submit">Registrar ajuste</button>
+    </form>
+  </article>
+
+  <article class="admin-card">
+    <h2 class="section-title">Movimientos recientes</h2>
+    <table class="admin-table">
+      <thead><tr><th>Tipo</th><th>Cantidad</th><th>Stock final</th><th>Nota</th><th>Fecha</th></tr></thead>
+      <tbody>
+        <% variant.inventoryMovements.forEach((movement) => { %>
+          <tr>
+            <td><%= movement.type %></td>
+            <td><%= movement.quantity %></td>
+            <td><%= movement.stockAfter ?? '-' %></td>
+            <td><%= movement.note || '-' %></td>
+            <td><%= new Date(movement.createdAt).toLocaleString('es-CO') %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </article>
+</section>
+
+

@@ -1,0 +1,22 @@
+﻿<section class="stack">
+  <article class="admin-card">
+    <h2 class="section-title"><%= customer.firstName %> <%= customer.lastName %></h2>
+    <p class="muted"><%= customer.email %> / <%= customer.phone || 'Sin telefono' %></p>
+    <div class="admin-grid kpi">
+      <div><div class="muted">Pedidos</div><div class="metric-value"><%= customer.orders.length %></div></div>
+      <div><div class="muted">Puntos</div><div class="metric-value"><%= customer.loyaltyAccount?.currentBalance || 0 %></div></div>
+      <div><div class="muted">Direcciones</div><div class="metric-value"><%= customer.addresses.length %></div></div>
+    </div>
+  </article>
+  <article class="admin-card">
+    <h2 class="section-title">Pedidos del cliente</h2>
+    <table class="admin-table">
+      <thead><tr><th>Pedido</th><th>Estado</th><th>Total</th></tr></thead>
+      <tbody>
+        <% customer.orders.forEach((order) => { %>
+          <tr><td><%= order.orderNumber %></td><td><%= order.status %></td><td>$ <%= Number(order.grandTotal).toLocaleString('es-CO') %></td></tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </article>
+</section>

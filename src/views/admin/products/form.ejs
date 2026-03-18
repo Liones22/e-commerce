@@ -1,0 +1,46 @@
+<% const action = mode === 'edit' ? `/admin/productos/${product.id}?_method=PUT` : '/admin/productos'; %>
+<section class="admin-card stack">
+  <form class="admin-form" method="post" action="<%= action %>">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <div class="admin-form-grid">
+      <label>Nombre<input type="text" name="name" value="<%= product?.name || '' %>" required /></label>
+      <label>Slug<input type="text" name="slug" value="<%= product?.slug || '' %>" /></label>
+      <label>Categoria
+        <select name="categoryId" required>
+          <% categories.forEach((category) => { %>
+            <option value="<%= category.id %>" <%= product?.categoryId === category.id ? 'selected' : '' %>><%= category.name %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Marca<input type="text" name="brand" value="<%= product?.brand || '' %>" /></label>
+      <label>Material<input type="text" name="material" value="<%= product?.material || '' %>" /></label>
+      <label><span>Activo</span><input type="checkbox" name="isActive" value="true" <%= product?.isActive !== false ? 'checked' : '' %> /></label>
+    </div>
+    <label>Descripcion corta<textarea name="shortDescription"><%= product?.shortDescription || '' %></textarea></label>
+    <label>Descripcion<textarea name="description"><%= product?.description || '' %></textarea></label>
+    <label>Cuidados<textarea name="careInstructions"><%= product?.careInstructions || '' %></textarea></label>
+
+    <section class="stack">
+      <h2 class="section-title">Variantes por talla</h2>
+      <% sizes.forEach((size, index) => { const existing = product?.variants?.find((variant) => variant.sizeId === size.id); %>
+        <div class="admin-form-grid admin-card" style="padding:16px;">
+          <input type="hidden" name="variantIds" value="<%= existing?.id || '' %>" />
+          <input type="hidden" name="variantSizeIds" value="<%= size.id %>" />
+          <input type="hidden" name="variantActiveFlags" value="true" />
+          <label>Talla<input type="text" value="<%= size.name %>" disabled /></label>
+          <label>SKU<input type="text" name="variantSkus" value="<%= existing?.sku || '' %>" placeholder="JRB-<%= size.code %>" /></label>
+          <label>Precio<input type="number" step="0.01" name="variantPrices" value="<%= existing?.price || '' %>" /></label>
+          <label>Precio compare<input type="number" step="0.01" name="variantCompareAtPrices" value="<%= existing?.compareAtPrice || '' %>" /></label>
+          <label>Stock inicial<input type="number" name="variantStocks" value="<%= existing?.stock || 0 %>" <%= mode === 'edit' ? 'readonly' : '' %> /></label>
+        </div>
+      <% }) %>
+    </section>
+
+    <div style="display:flex;gap:12px;">
+      <button type="submit"><%= mode === 'edit' ? 'Guardar cambios' : 'Crear producto' %></button>
+      <a class="button-link alt" href="/admin/productos">Cancelar</a>
+    </div>
+  </form>
+</section>
+
+

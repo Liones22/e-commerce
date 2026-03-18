@@ -1,0 +1,43 @@
+﻿<article class="product-card reveal" style="<%= product.ui.cardStyle %>">
+  <a class="product-card__media" href="/producto/<%= product.slug %>">
+    <div class="product-card__badge-row">
+      <% if (product.ui.isFeatured) { %>
+        <span class="pill pill--soft">Destacado</span>
+      <% } %>
+      <% if (product.ui.isLowStock) { %>
+        <span class="pill pill--alert">Pocas unidades</span>
+      <% } %>
+    </div>
+    <div class="product-card__art" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </a>
+
+  <div class="product-card__content">
+    <div class="product-card__meta">
+      <span><%= product.ui.categoryLabel %></span>
+      <span><%= product.ui.sizeLabel %></span>
+    </div>
+    <a class="product-card__title" href="/producto/<%= product.slug %>"><%= product.name %></a>
+    <p class="product-card__copy"><%= product.shortDescription || 'Pieza seleccionada de la boutique.' %></p>
+    <div class="product-card__price">
+      <strong><%= product.ui.priceLabel %></strong>
+      <% if (product.ui.compareAtLabel) { %>
+        <span><%= product.ui.compareAtLabel %></span>
+      <% } %>
+    </div>
+    <div class="product-card__actions">
+      <a class="text-link" href="/producto/<%= product.slug %>">Ver detalle</a>
+      <button
+        type="button"
+        class="mini-button"
+        data-cart-add
+        data-product="<%- encodeURIComponent(JSON.stringify({ id: product.id, slug: product.slug, name: product.name, priceLabel: product.ui.priceLabel, priceValue: product.ui.priceValue, categoryLabel: product.ui.categoryLabel, sizeLabel: product.ui.sizeLabel })) %>"
+      >
+        Añadir
+      </button>
+    </div>
+  </div>
+</article>
