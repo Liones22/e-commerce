@@ -47,7 +47,7 @@ Este repo incluye [render.yaml](/C:/Users/cbita/OneDrive/Escritorio/Proyectos pe
 
 ### Comandos de deploy configurados
 - Build: `npm install --production=false && npm run prisma:generate`
-- Start: `npm run prisma:deploy && npx prisma db push && npm start`
+- Start: `npx prisma db push --skip-generate && npm start`
 
 ## Estructura
 - `src/config`: bootstrap y configuraciones
