@@ -1,14 +1,27 @@
 const { z } = require('zod');
 
-const paymentLookupSchema = z.object({
+const paymentLookupBaseSchema = z.object({
   paymentId: z.string().min(1).optional(),
   reference: z.string().min(1).optional(),
   attemptId: z.string().min(1).optional(),
   providerAttemptId: z.string().min(1).optional(),
   status: z.string().min(1).optional(),
   event: z.string().min(1).optional()
-}).refine((payload) => payload.paymentId || payload.reference, {
+});
+
+const paymentLookupSchema = paymentLookupBaseSchema.refine((payload) => payload.paymentId || payload.reference, {
   message: 'paymentId or reference is required'
+});
+
+const paymentWebhookBodySchema = paymentLookupBaseSchema.extend({
+  eventId: z.string().min(1).optional(),
+  id: z.string().min(1).optional(),
+  requestId: z.string().min(1).optional(),
+  provider: z.enum(['MANUAL', 'WOMPI', 'CASH']).optional(),
+  signature: z.string().min(16).optional()
+}).refine((payload) => payload.paymentId || payload.reference, {
+  message: 'paymentId or reference is required',
+  path: ['paymentId']
 });
 
 const paymentReturnSchema = z.object({
@@ -18,13 +31,7 @@ const paymentReturnSchema = z.object({
 });
 
 const paymentWebhookSchema = z.object({
-  body: paymentLookupSchema.extend({
-    eventId: z.string().min(1).optional(),
-    id: z.string().min(1).optional(),
-    requestId: z.string().min(1).optional(),
-    provider: z.enum(['MANUAL', 'WOMPI', 'CASH']).optional(),
-    signature: z.string().min(16).optional()
-  }),
+  body: paymentWebhookBodySchema,
   params: z.object({}).optional(),
   query: z.object({}).optional()
 }).refine((payload) => payload.body.event || payload.body.status, {
