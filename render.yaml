@@ -3,7 +3,7 @@ services:
     runtime: node
     name: jrb-ecommerce-web
     plan: free
-    buildCommand: npm ci && npm run prisma:generate
+    buildCommand: npm ci --include=dev && npm run prisma:generate
     startCommand: npm run prisma:deploy || npx prisma db push && npm start
     healthCheckPath: /health
     envVars:
