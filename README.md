@@ -46,7 +46,7 @@ Este repo incluye [render.yaml](/C:/Users/cbita/OneDrive/Escritorio/Proyectos pe
 5. Espera el deploy inicial y abre la URL publica del servicio.
 
 ### Comandos de deploy configurados
-- Build: `npm ci --include=dev && npm run prisma:generate`
+- Build: `npm install --production=false && npm run prisma:generate`
 - Start: `npm run prisma:deploy || npx prisma db push && npm start`
 
 ## Estructura

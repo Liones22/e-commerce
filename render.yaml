@@ -3,12 +3,14 @@ services:
     runtime: node
     name: jrb-ecommerce-web
     plan: free
-    buildCommand: npm ci --include=dev && npm run prisma:generate
+    buildCommand: npm install --production=false && npm run prisma:generate
     startCommand: npm run prisma:deploy || npx prisma db push && npm start
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NODE_VERSION
+        value: 20.18.0
       - key: APP_NAME
         value: Jhoana Rosales Boutique
       - key: DATABASE_URL
